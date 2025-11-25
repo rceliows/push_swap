@@ -1,13 +1,14 @@
 #ifndef MAIN_H
 # define MAIN_H
 
+# include <limits.h>
 # include "../libft/inc/libft.h"
 # include "../libft/inc/ft_printf.h"
 
 typedef struct s_stack_node
 {
 	int					nbr;
-	int					index;
+	size_t				index;
 	int					push_cost;
 	int					above_median;
 	int					cheapest;
@@ -35,14 +36,14 @@ t_stack_node	*get_cheapest(t_stack_node *stack);
 void			prep_for_push(t_stack_node **s, t_stack_node *n, char c);
 
 // Stack utils
-int				stack_len(t_stack_node *stack);
+size_t			stack_len(t_stack_node *stack);
 t_stack_node	*find_last(t_stack_node *stack);
 int				stack_sorted(t_stack_node *stack);
 t_stack_node	*find_min(t_stack_node *stack);
 t_stack_node	*find_max(t_stack_node *stack);
 void			min_on_top(t_stack_node **a);
 int				calc_optimal_cost(t_stack_node *a, t_stack_node *target,
-					int len_a, int len_b);
+					size_t len_a, size_t len_b);
 
 // Commands
 void			sa(t_stack_node **a, int print);

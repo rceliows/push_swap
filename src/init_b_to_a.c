@@ -8,7 +8,7 @@ static void	set_target_b(t_stack_node *a, t_stack_node *b)
 
 	while (b)
 	{
-		best_match_index = 2147483647 + 1L;
+		best_match_index = LONG_MAX;
 		current_a = a;
 		while (current_a)
 		{
@@ -20,7 +20,7 @@ static void	set_target_b(t_stack_node *a, t_stack_node *b)
 			}
 			current_a = current_a->next;
 		}
-		if (best_match_index == 2147483647 + 1L)
+		if (best_match_index == LONG_MAX)
 			b->target_node = find_min(a);
 		else
 			b->target_node = target_node;

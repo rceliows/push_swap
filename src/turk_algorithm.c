@@ -44,7 +44,7 @@ static void	move_b_to_a(t_stack_node **a, t_stack_node **b)
 
 void	sort_stacks(t_stack_node **a, t_stack_node **b)
 {
-	int	len_a;
+	size_t	len_a;
 
 	len_a = stack_len(*a);
 	if (len_a-- > 3 && !stack_sorted(*a))

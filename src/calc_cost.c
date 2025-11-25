@@ -1,6 +1,6 @@
 #include "../inc/main.h"
 
-static int	get_rotation_cost(t_stack_node *node, int stack_len)
+static int	get_rotation_cost(t_stack_node *node, size_t stack_len)
 {
 	if (node->above_median)
 		return (node->index);
@@ -17,7 +17,7 @@ static int	calc_same_direction_cost(int cost_a, int cost_b)
 }
 
 int	calc_optimal_cost(t_stack_node *a, t_stack_node *target,
-		int len_a, int len_b)
+		size_t len_a, size_t len_b)
 {
 	int	cost_a;
 	int	cost_b;

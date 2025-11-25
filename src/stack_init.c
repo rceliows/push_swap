@@ -50,7 +50,7 @@ static void	append_node(t_stack_node **stack, int n)
 void	init_stack_a(t_stack_node **a, char **argv)
 {
 	long	n;
-	int		i;
+	size_t	i;
 
 	i = 0;
 	while (argv[i])
@@ -58,7 +58,7 @@ void	init_stack_a(t_stack_node **a, char **argv)
 		if (error_syntax(argv[i]))
 			free_errors(a);
 		n = ft_atol(argv[i]);
-		if (n > 2147483647 || n < -2147483647 - 1)
+		if (n > INT_MAX || n < INT_MIN)
 			free_errors(a);
 		if (error_duplicate(*a, (int)n))
 			free_errors(a);

@@ -1,9 +1,9 @@
 #include "../inc/main.h"
 
-static int	count_words(char *s, char c)
+static size_t	count_words(char *s, char c)
 {
-	int	count;
-	int	inside_word;
+	size_t	count;
+	int		inside_word;
 
 	if (!s)
 		return (0);
@@ -26,11 +26,11 @@ static int	count_words(char *s, char c)
 	return (count);
 }
 
-static char	*extract_word(char *s, int start, char c)
+static char	*extract_word(char *s, size_t start, char c)
 {
 	char	*word;
-	int		len;
-	int		i;
+	size_t	len;
+	size_t	i;
 
 	len = 0;
 	while (s[start + len] && s[start + len] != c)
@@ -48,9 +48,9 @@ static char	*extract_word(char *s, int start, char c)
 	return (word);
 }
 
-static void	free_array(char **array, int count)
+static void	free_array(char **array, size_t count)
 {
-	int	i;
+	size_t	i;
 
 	if (!array)
 		return ;
@@ -63,10 +63,10 @@ static void	free_array(char **array, int count)
 	free(array);
 }
 
-static int	fill_array(char **result, char *s, char c, int words)
+static int	fill_array(char **result, char *s, char c, size_t words)
 {
-	int	i;
-	int	j;
+	size_t	i;
+	size_t	j;
 
 	i = 1;
 	j = 0;
@@ -91,7 +91,7 @@ static int	fill_array(char **result, char *s, char c, int words)
 
 char	**split(char *s, char c)
 {
-	int		words;
+	size_t	words;
 	char	**result;
 
 	if (!s)

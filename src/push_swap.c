@@ -1,4 +1,4 @@
-#include "inc/push_swap.h"
+#include "../inc/main.h"
 
 static int	validate_args(int argc, char **argv)
 {

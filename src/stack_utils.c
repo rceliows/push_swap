@@ -1,8 +1,8 @@
 #include "../inc/main.h"
 
-int	stack_len(t_stack_node *stack)
+size_t	stack_len(t_stack_node *stack)
 {
-	int	count;
+	size_t	count;
 
 	if (!stack)
 		return (0);
@@ -44,7 +44,7 @@ t_stack_node	*find_min(t_stack_node *stack)
 
 	if (!stack)
 		return (NULL);
-	min = 2147483647;
+	min = LONG_MAX;
 	while (stack)
 	{
 		if (stack->nbr < min)
@@ -64,7 +64,7 @@ t_stack_node	*find_max(t_stack_node *stack)
 
 	if (!stack)
 		return (NULL);
-	max = -2147483647 - 1;
+	max = LONG_MIN;
 	while (stack)
 	{
 		if (stack->nbr > max)
