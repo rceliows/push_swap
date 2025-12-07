@@ -2,14 +2,15 @@
 NAME			= push_swap
 
 # Directories
-LIBFT			= ./libft/libft.a
-INC				= inc/
+LIBFT_DIR		= ./libft
+LIBFT			= $(LIBFT_DIR)/libft.a
+INC			= inc/
 SRC_DIR			= src/
 OBJ_DIR			= obj/
 
 # Compielr and Flags
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -I$(INC)
+CFLAGS			= -Wall -Wextra -Werror -I$(INC) -I$(LIBFT_DIR)/inc
 RM				= rm -f
 AR				= ar rcs
 
@@ -37,32 +38,49 @@ SRCS 			= $(COMMANDS_DIR) $(PUSH_SWAP_UTILS) $(PUSH_SWAP)
 # Apply the pattern substitution to each source file in SRC and produce a corresponding list of object files in the OBJ_DIR
 OBJ 			= $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
 
-# Build rules
-start:				
-				@make all
+all:			$(NAME)
 
-$(LIBFT):
-				@make -C ./libft
+$(NAME):		$(LIBFT) $(OBJ)
+			@echo "Linking $(NAME)..."
+			@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+			@echo "Build complete!"
 
-all: 			$(NAME)
+# Check if libft directory exists, if not clone it
+$(LIBFT_DIR):
+			@echo "libft not found. Cloning from repository..."
+			@git clone git@github.com:rceliows/libft.git $(LIBFT_DIR)
+			@echo "libft cloned successfully!"
 
-$(NAME): 		$(OBJ) $(LIBFT)
-				@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+$(LIBFT):		$(LIBFT_DIR)
+			@echo "Building libft..."
+			@make -C $(LIBFT_DIR)
+			@echo "libft built successfully!"
 
 # Compile object files from source files
-$(OBJ_DIR)%.o:	$(SRC_DIR)%.c 
-				@mkdir -p $(@D)
-				@$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)%.o:		$(SRC_DIR)%.c 
+			@mkdir -p $(@D)
+			@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-				@$(RM) -r $(OBJ_DIR)
-				@make clean -C ./libft
+			@echo "Cleaning object files..."
+			@$(RM) -r $(OBJ_DIR)
+			@if [ -d "$(LIBFT_DIR)" ]; then make clean -C $(LIBFT_DIR); fi
+			@echo "Clean complete!"
 
-fclean: 		clean
-				@$(RM) $(NAME)
-				@$(RM) $(LIBFT)
+fclean:			clean
+			@echo "Removing executables..."
+			@$(RM) $(NAME)
+			@if [ -d "$(LIBFT_DIR)" ]; then $(RM) $(LIBFT); fi
+			@echo "Full clean complete!"
 
-re: 			fclean all
+fcleanall:		fclean
+			@echo "Removing library directories..."
+			@if [ -d "$(LIBFT_DIR)" ]; then rm -rf $(LIBFT_DIR); echo "Removed $(LIBFT_DIR)"; fi
+			@echo "Full clean with libraries complete!"
+
+re:			fclean all
+
+reall:			fcleanall all
 
 # Phony targets represent actions not files
-.PHONY: 		start all clean fclean re
+.PHONY:			all clean fclean fcleanall re reall
